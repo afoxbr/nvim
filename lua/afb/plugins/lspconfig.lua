@@ -26,6 +26,10 @@ return {
 
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+        require'lspconfig'.clangd.setup({
+            capabilities = capabilities,
+        })
+
         mason_lspconfig.setup_handlers({
             function(server)
                 nvim_lsp[server].setup({
@@ -68,7 +72,12 @@ return {
                     capabilities = capabilities,
                 })
             end,
+            ["clangd"] = function()
+                nvim_lsp["clangd"].setup({
+                    on_attach = on_attach,
+                    capabilities = capabilities,
+                })
+            end,
         })
-        require("lspconfig").clangd.setup{}
     end,
 }
